@@ -158,8 +158,6 @@
 
         keyFn = function(d){ return d.data.label; }; 
 
-        color = d3.scale.ordinal()
-            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]); // Keep the color range
     }
 
     function change(data) {
@@ -168,15 +166,13 @@
             return;
         }
 
-        color.domain(data.map(function(d) { return d.label; }));
-
         /* ------- PIE SLICES -------*/
         var slice = svg.select(".slices").selectAll("path.slice")
             .data(pie(data), keyFn); 
 
         slice.enter()
             .insert("path")
-            .style("fill", function(d) { return color(d.data.label); })
+            .style("fill", function(d) { return d.data.color; })
             .attr("class", "slice")
             .each(function(d) { this._current = d; });
 
@@ -292,23 +288,12 @@
 
     <script>
         var dataSource = {
-                datasets: [
-                    {
-                        data: [],
-                        backgroundColor: [
-                            '#ffcd56',
-                            '#ff6384',
-                            '#36a2eb',
-                            '#fd6b19',
-                            '#8e44ad',
-                            '#2ecc71',
-                            '#e67e22',
-                            '#3498db',
-                        ]
-                    }
-                ],
-                labels: []
-            };
+            datasets: [{ 
+                data: [],
+                backgroundColor: []
+            }],
+            labels: []
+        };
 
         function createChart() {
             var ctx = document.getElementById('myChart').getContext('2d');
@@ -323,34 +308,36 @@
             .then(function (res) {
                 for (var i = 0; i < res.data.myBudget.length; i++) {
                     dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
-                    dataSource.labels[i] = res.data.myBudget[i].title;             
+                    dataSource.labels[i] = res.data.myBudget[i].title;  
+                    dataSource.datasets[0].backgroundColor[i] = res.data.myBudget[i].color;           
                 }
             createChart();
+            console.log(dataSource)
             
             change(
                 dataSource.labels.map((label, i) => ({
                     label: label,
-                    value: dataSource.datasets[0].data[i]
+                    value: dataSource.datasets[0].data[i],
+                    color: dataSource.datasets[0].backgroundColor[i]
                 }))
             )
             }).catch(() => {
                 // Fallback for when the localhost data isn't available
                 const d3Data = [
-                    {label: "Housing", value: 350},
-                    {label: "Food", value: 120},
-                    {label: "Utilities", value: 80},
-                    {label: "Gas", value: 50},
-                    {label: "Fun", value: 150},
+                    {label: "Housing", value: 350, backgroundColor: '#3498db'},
+                    {label: "Food", value: 120, backgroundColor: '#2ecc71'},
+                    {label: "Utilities", value: 80, backgroundColor: '#ffcd56'},
+                   // {label: "Gas", value: 50},
+                    //{label: "Fun", value: 150},
                 ];
                  const chartJsData = {
-                    datasets: [{
-                        data: d3Data.map(d => d.value),
-                        backgroundColor: dataSource.datasets[0].backgroundColor
-                    }],
+                    data: d3Data.map(d => d.value),
+                    backgroundColor: d3Data.map(d => d.backgroundColor),
                     labels: d3Data.map(d => d.label)
                 };
-                dataSource.datasets = chartJsData.datasets;
-                dataSource.labels = chartJsData.labels;
+                //dataSource.backgroundColor = chartJsData.backgroundColor;
+                //dataSource.data = chartJsData.data;
+                //dataSource.labels = chartJsData.labels;
                 createChart();
                 change(d3Data);
             });
