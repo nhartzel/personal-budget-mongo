@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Budget</title>
-    <!-- This is an SEO change -->
     <meta name="description" content="Your free tool for financial freedom!">
     <meta name="keywords" content="app free budget finance">
-    <!-- This is an SEO change -->
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="main.css">
 </head>
@@ -15,10 +13,8 @@
 
 <a href="#main" class="skip">Skip to content</a>
 
-    <!-- This is an A11y change --> 
     <nav aria-label="main navigation links">
         <ul>
-            <!-- This is an SEO change -->
 
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
@@ -29,7 +25,6 @@
 
     <div class="hero">
         <h1>Personal Budget</h1>
-        <!-- This is a Semantic HTML change -->
         <h2>Your pathway to financial success!</h2>
     </div>
 
@@ -38,7 +33,6 @@
         <div class="page-area">
 
             <article>
-                <!-- A11y change, switched to H2 headings-->
                 <h2>Stay on track</h2>
                 <p>
                     Do you know where you are spending your money? If you really stop to track it down,
@@ -48,7 +42,6 @@
             </article>
     
             <article>
-                <!-- This is a Semantic change -->
                 <h2>Live Budgeting Alerts</h2>
                 <p>
                     To make sure you always have the right information as soon as you need it, we provide 
@@ -66,7 +59,6 @@
             </article>
     
             <article>
-                <!-- This is a Semantic change -->
                 <h2>Free, Fast, and Secure!</h2>
                 <p>
                     Not only is this app completely free, but we do not store any of your personal data. 
@@ -101,7 +93,6 @@
     
             <article>
                 <h2>Chart</h2>
-                <!-- This is an A11y change -->
                 <p>
                     <canvas id="myChart" width="400" height="400" aria-label="A pie chart displaying your budget information"></canvas>
                 </p>
@@ -322,7 +313,7 @@
                 }))
             )
             }).catch(() => {
-                // Fallback for when the localhost data isn't available
+                // hardcoded fallback data (should not use)
                 const d3Data = [
                     {label: "Housing", value: 350, backgroundColor: '#3498db'},
                     {label: "Food", value: 120, backgroundColor: '#2ecc71'},
@@ -350,7 +341,6 @@
 
 #d3-chart{
     width: 100%;
-    /* The height is now controlled by the SVG element itself */
     display: flex;
     align-items: center;
     justify-content: center;
